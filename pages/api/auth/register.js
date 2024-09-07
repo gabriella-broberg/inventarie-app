@@ -1,30 +1,42 @@
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 
 const prisma = new PrismaClient();
+const JWT_SECRET = 'your_jwt_secret'; // Make sure this matches your login route secret
 
 export default async function handler(req, res) {
   if (req.method === 'POST') {
     const { name, email, password } = req.body;
 
-    if (!name || !email || !password) {
-      return res.status(400).json({ error: 'Missing required fields' });
-    }
-
     try {
-      // Kryptera lösenordet
+      // Kontrollera om användaren redan finns
+      const existingUser = await prisma.user.findUnique({ where: { email } });
+      if (existingUser) {
+        return res.status(400).json({ message: 'User already exists' });
+      }
+
+      // Hasha lösenordet
       const hashedPassword = await bcrypt.hash(password, 10);
 
-      // Skapa användare i databasen
-      const user = await prisma.user.create({
-        data: { name, email, password: hashedPassword },
+      // Skapa en ny användare
+      const newUser = await prisma.user.create({
+        data: {
+          name,
+          email,
+          password: hashedPassword,
+        },
       });
 
-      res.status(201).json({ message: 'User created', user });
+      // Generera en JWT-token för den nya användaren
+      const token = jwt.sign({ userId: newUser.id }, JWT_SECRET, { expiresIn: '30d' });
+
+      // Returnera token
+      res.status(201).json({ token });
     } catch (error) {
-      res.status(400).json({ error: 'Email already exists' });
+      res.status(500).json({ message: 'Error creating user' });
     }
   } else {
-    res.status(405).json({ error: 'Method not allowed' });
+    res.status(405).json({ message: 'Method not allowed' });
   }
 }

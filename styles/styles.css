@@ -1,0 +1,133 @@
+/* Basic global styles */
+body {
+    font-family: 'Arial', sans-serif; /* Use a simple modern sans-serif font */
+    background-color: #f4f4f9; /* Soft background */
+    max-width: 1200px; /* Restrict max width */
+    margin: 0 auto; /* Center the container horizontally */
+    padding: 20px; /* Add some padding */
+    color: #333;
+}
+
+
+  
+
+/* Boxed section styles */
+.box {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Light shadow for box */
+}
+
+/* Filter box specific styling */
+.filter-box {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px; /* Smaller padding */
+    font-size: 12px; /* Smaller font size */
+}
+
+/* Input and select styling inside filter box */
+.filter-box input[type="text"],
+.filter-box input[type="number"],
+.filter-box select {
+    width: 100%;
+    max-width: 150px; /* Restrict input width even more */
+    padding: 5px; /* Smaller padding */
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 12px; /* Smaller font size */
+}
+
+
+/* Input and select styling */
+input[type="text"],
+input[type="number"],
+select {
+    width: 100%;
+    max-width: 300px; /* Restrict input width */
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+/* Buttons */
+button {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* List styling */
+ul {
+    list-style: none; /* Remove bullet points */
+    padding: 0;
+}
+
+li {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    margin: 10px 0;
+    padding: 15px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Item details */
+li h2 {
+    margin: 0;
+    font-size: 18px;
+}
+
+li p {
+    margin: 0;
+    color: #555;
+    font-size: 14px;
+}
+
+
+/* Modal content */
+.modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 500px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Modal overlay to gray out the background */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent gray background */
+    z-index: 1000;
+}
