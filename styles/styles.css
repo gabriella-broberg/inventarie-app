@@ -1,15 +1,18 @@
 /* Basic global styles */
 body {
-    font-family: 'Arial', sans-serif; /* Use a simple modern sans-serif font */
-    background-color: #f4f4f9; /* Soft background */
-    max-width: 1200px; /* Restrict max width */
-    margin: 0 auto; /* Center the container horizontally */
-    padding: 20px; /* Add some padding */
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f9;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
     color: #333;
 }
 
-
-  
+.logout-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+}
 
 /* Boxed section styles */
 .box {
@@ -18,31 +21,63 @@ body {
     border-radius: 8px;
     padding: 20px;
     margin-bottom: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Light shadow for box */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* Filter box specific styling */
 .filter-box {
-    max-width: 1200px;
+    max-width: 1200px; /* Reduce the max-width to make the section smaller */
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px; /* Smaller padding */
-    font-size: 12px; /* Smaller font size */
+    padding: 8px 12px; /* Reduce padding for a more compact feel */
+    font-size: 11px; /* Decrease font size */
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-/* Input and select styling inside filter box */
-.filter-box input[type="text"],
-.filter-box input[type="number"],
-.filter-box select {
-    width: 100%;
-    max-width: 150px; /* Restrict input width even more */
-    padding: 5px; /* Smaller padding */
-    margin: 5px 0;
+.filter-item {
+    display: flex;
+    align-items: center;
+    margin-right: 10px; /* Reduce spacing between filters */
+}
+
+.filter-item label {
+    margin-right: 6px; /* Decrease space between label and input */
+    font-size: 12px;
+    color: #555;
+}
+
+.filter-item select {
+    max-width: 150px; /* Reduce width of the select boxes */
+    padding: 4px; /* Reduce padding inside the inputs */
+    margin-left: 5px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    font-size: 12px; /* Smaller font size */
+    font-size: 12px;
+}
+
+/* Input and select styling for add item form */
+input[type="text"],
+input[type="number"],
+select {
+    max-width: 280px; /* Slightly reduce the width of the inputs */
+    padding: 8px; /* Reduce padding */
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+
+/* Wrap each label + select pair in a container */
+.filter-item {
+    display: flex;
+    align-items: center; /* Align the label and select vertically */
+    margin-right: 20px; /* Add spacing between filter elements */
 }
 
 
@@ -51,9 +86,18 @@ input[type="text"],
 input[type="number"],
 select {
     width: 100%;
-    max-width: 300px; /* Restrict input width */
+    max-width: 300px;
     padding: 10px;
     margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+/* Datalist input styling for category */
+input[list="category-options"] {
+    max-width: 300px;
+    padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 16px;
@@ -78,7 +122,7 @@ button:hover {
 
 /* List styling */
 ul {
-    list-style: none; /* Remove bullet points */
+    list-style: none;
     padding: 0;
 }
 
@@ -93,7 +137,6 @@ li {
     align-items: center;
 }
 
-/* Item details */
 li h2 {
     margin: 0;
     font-size: 18px;
@@ -104,7 +147,6 @@ li p {
     color: #555;
     font-size: 14px;
 }
-
 
 /* Modal content */
 .modal-content {
@@ -121,13 +163,12 @@ li p {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Modal overlay to gray out the background */
 .modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent gray background */
+    background-color: rgba(0, 0, 0, 0.5);
     z-index: 1000;
 }

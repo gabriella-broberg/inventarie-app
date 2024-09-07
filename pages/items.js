@@ -191,27 +191,13 @@ export default function Items() {
       <h1>Inventory Items</h1>
       
       {/* Logout button */}
-      <button onClick={handleLogout}>Log Out</button>
+      <div className="logout-container">
+  <button onClick={handleLogout}>Log Out</button>
+</div>
 
-      {/* Filter box */}
-      <div className="box filter-box">
-        <label>Filter by Category:</label>
-        <select value={categoryFilter} onChange={(e) => setCategoryFilter(e.target.value)}>
-          <option value="">All</option>
-          {categories.map((category) => (
-            <option key={category} value={category}>{category}</option>
-          ))}
-        </select>
-        <label>
-          In Stock:
-          <select value={inStockFilter} onChange={(e) => setInStockFilter(e.target.value)}>
-            <option value="">All</option>
-            <option value="true">In Stock</option>
-            <option value="false">Out of Stock</option>
-          </select>
-        </label>
-      </div>
-  
+
+
+      
       {/* Add Item form */}
       <div className="box">
         <form onSubmit={handleSubmit}>
@@ -255,6 +241,30 @@ export default function Items() {
           <button type="submit">Add Item</button>
         </form>
       </div>
+
+{/* Filter box */}
+<div className="box filter-box">
+  <div className="filter-item">
+    <label>Filter by Category:</label>
+    <select value={categoryFilter} onChange={(e) => setCategoryFilter(e.target.value)}>
+      <option value="">All</option>
+      {categories.map((category) => (
+        <option key={category} value={category}>{category}</option>
+      ))}
+    </select>
+  </div>
+  
+  <div className="filter-item">
+    <label>Stock Status</label>
+    <select value={inStockFilter} onChange={(e) => setInStockFilter(e.target.value)}>
+      <option value="">All</option>
+      <option value="true">Available</option>
+      <option value="false">Not Available</option>
+    </select>
+  </div>
+</div>
+
+  
   
       {/* Item list */}
       <ul>
