@@ -8,12 +8,18 @@ Modal.setAppElement('#__next');
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [modalIsOpen, setModalIsOpen] = useState(false); // For registration modal
-  const [newUser, setNewUser] = useState({ name: '', email: '', password: '' });
+  const [errorMessage, setErrorMessage] = useState(''); // För att visa felmeddelanden
+  const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false); // För att hantera registreringsmodals synlighet
+  const [registerEmail, setRegisterEmail] = useState('');
+  const [registerPassword, setRegisterPassword] = useState('');
+  const [registerErrorMessage, setRegisterErrorMessage] = useState(''); // Felmeddelande för registrering
   const router = useRouter();
 
+  // Hantera inloggning
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setErrorMessage(''); // Återställ felmeddelande innan ny inloggning
+
     try {
       const res = await fetch('/api/auth/login', {
         method: 'POST',
@@ -22,38 +28,45 @@ export default function Login() {
         },
         body: JSON.stringify({ email, password }),
       });
+
       const data = await res.json();
+
       if (res.ok) {
         localStorage.setItem('token', data.token);
-        router.push('/items');
+        router.push('/items'); // Redirect to items page
       } else {
-        console.error('Login failed:', data.message);
+        setErrorMessage(data.message);
       }
     } catch (error) {
-      console.error('Error logging in:', error);
+      setErrorMessage('An unexpected error occurred. Please try again.');
     }
   };
 
-  // Handle registration
+  // Hantera registrering
   const handleRegister = async (e) => {
     e.preventDefault();
+    setRegisterErrorMessage('');
+
     try {
       const res = await fetch('/api/auth/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(newUser),
+        body: JSON.stringify({ email: registerEmail, password: registerPassword }),
       });
+
+      const data = await res.json();
+
       if (res.ok) {
-        setModalIsOpen(false); // Close the modal after successful registration
-        alert('User registered successfully!');
+        setIsRegisterModalOpen(false); // Stäng modal om registrering lyckas
+        setRegisterEmail('');
+        setRegisterPassword('');
       } else {
-        const data = await res.json();
-        console.error('Registration failed:', data.message);
+        setRegisterErrorMessage(data.message);
       }
     } catch (error) {
-      console.error('Error registering user:', error);
+      setRegisterErrorMessage('An unexpected error occurred. Please try again.');
     }
   };
 
@@ -78,41 +91,41 @@ export default function Login() {
         <button type="submit">Login</button>
       </form>
 
-      {/* Button to open registration modal */}
-      <button onClick={() => setModalIsOpen(true)}>Register New User</button>
+      {/* Visa felmeddelande för inloggning */}
+      {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
 
-      {/* Registration Modal */}
+      {/* Register button to open modal */}
+      <button onClick={() => setIsRegisterModalOpen(true)}>Register New User</button>
+
+      {/* Register Modal */}
       <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={() => setModalIsOpen(false)}
+        isOpen={isRegisterModalOpen}
+        onRequestClose={() => setIsRegisterModalOpen(false)}
         contentLabel="Register New User"
       >
         <h2>Register New User</h2>
         <form onSubmit={handleRegister}>
           <input
-            type="text"
-            value={newUser.name}
-            onChange={(e) => setNewUser({ ...newUser, name: e.target.value })}
-            placeholder="Name"
-            required
-          />
-          <input
             type="email"
-            value={newUser.email}
-            onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
+            value={registerEmail}
+            onChange={(e) => setRegisterEmail(e.target.value)}
             placeholder="Email"
             required
           />
           <input
             type="password"
-            value={newUser.password}
-            onChange={(e) => setNewUser({ ...newUser, password: e.target.value })}
+            value={registerPassword}
+            onChange={(e) => setRegisterPassword(e.target.value)}
             placeholder="Password"
             required
           />
           <button type="submit">Register</button>
         </form>
-        <button onClick={() => setModalIsOpen(false)}>Close</button>
+
+        {/* Visa felmeddelande för registrering */}
+        {registerErrorMessage && <p style={{ color: 'red' }}>{registerErrorMessage}</p>}
+
+        <button onClick={() => setIsRegisterModalOpen(false)}>Close</button>
       </Modal>
     </div>
   );
