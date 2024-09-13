@@ -10,6 +10,7 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState(''); // För att visa felmeddelanden
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false); // För att hantera registreringsmodals synlighet
+  const [registerName, setRegisterName] = useState(''); // Lägg till namn
   const [registerEmail, setRegisterEmail] = useState('');
   const [registerPassword, setRegisterPassword] = useState('');
   const [registerErrorMessage, setRegisterErrorMessage] = useState(''); // Felmeddelande för registrering
@@ -53,13 +54,15 @@ export default function Login() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email: registerEmail, password: registerPassword }),
+        body: JSON.stringify({ name: registerName, email: registerEmail, password: registerPassword }), // Skicka namn
       });
 
       const data = await res.json();
 
       if (res.ok) {
+        alert('New User Created Successfully!'); // Visa en popup när användaren skapas
         setIsRegisterModalOpen(false); // Stäng modal om registrering lyckas
+        setRegisterName(''); // Återställ namn
         setRegisterEmail('');
         setRegisterPassword('');
       } else {
@@ -99,12 +102,21 @@ export default function Login() {
 
       {/* Register Modal */}
       <Modal
+        className="modal-content"
+        overlayClassName="modal-overlay"
         isOpen={isRegisterModalOpen}
         onRequestClose={() => setIsRegisterModalOpen(false)}
         contentLabel="Register New User"
       >
         <h2>Register New User</h2>
         <form onSubmit={handleRegister}>
+          <input
+            type="text"
+            value={registerName}
+            onChange={(e) => setRegisterName(e.target.value)}
+            placeholder="Name"
+            required
+          />
           <input
             type="email"
             value={registerEmail}
@@ -122,7 +134,6 @@ export default function Login() {
           <button type="submit">Register</button>
         </form>
 
-        {/* Visa felmeddelande för registrering */}
         {registerErrorMessage && <p style={{ color: 'red' }}>{registerErrorMessage}</p>}
 
         <button onClick={() => setIsRegisterModalOpen(false)}>Close</button>

@@ -1,6 +1,6 @@
-// api/items/index.js
+
 import { PrismaClient } from '@prisma/client';
-import { verifyToken } from '../../utils/auth'; // Se till att stigen är korrekt
+import { verifyToken } from '../../utils/auth'; 
 
 const prisma = new PrismaClient();
 
@@ -12,6 +12,12 @@ export default async function handler(req, res) {
     try {
       // Verifiera JWT-token
       const decoded = verifyToken(req);
+
+
+      //  Förklara hur vårt resultat från databasen filtreras.
+//I koden används Prisma för att hämta data från databasen. Query-parametrarna category och inStock används för att filtrera resultaten.
+//Om en kategori skickas med i query-parametern filtreras resultaten baserat på det.
+//Om inStock skickas, filtreras items som har ett lager större än 0 om inStock är true, annars hämtas items med 0 i lager.
 
       // Skapa filterobjekt för Prisma-begäran
       let filter = {};
